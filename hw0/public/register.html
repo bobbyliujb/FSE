@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GoChat-Register</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+  </head>
+  <body>
+    <div class="form-div">
+      <h1>Register and GoChat</h1>
+    
+      <form id="reg-form" >
+        <div class="input-box">
+          <label>username</label>
+          <input id="username-input" />
+        </div>
+        <div class="notice">
+          <span id="username-error">Username already exist!</span>
+        </div>
+
+        <div class="input-box">
+          <label>password</label>
+          <input id="password-input" type="password" />
+        </div>
+        <div class="notice">
+          <span id="password-error">Password invalid!</span>
+        </div>
+
+        <div class="input-box">
+          <label>repeat password</label>
+          <input id="rep-pwd-input" type="password" />
+        </div>
+        <div class="notice">
+          <span id="rep-pwd-error">Repeated password not match!</span>
+        </div>
+        
+        <div>
+          <button type="submit">REGISTER NOW</button>
+        </div>
+        <div><a href="login.html">Already a member? Login here</a></div>
+      </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>    
+    <script src="/js/register.js"></script>
+  </body>
+</html>

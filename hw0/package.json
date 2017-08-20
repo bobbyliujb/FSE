@@ -1,0 +1,11 @@
+{
+  "name": "GoChat",
+  "version": "1.0.1",
+  "description": "Real time public chatting room",
+  "dependencies": {
+    "express": "^4.15.4",
+    "express-session": "^1.15.5",
+    "mysql": "^2.14.1",
+    "socket.io": "^2.0.3"
+  }
+}
