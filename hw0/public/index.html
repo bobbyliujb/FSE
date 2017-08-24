@@ -5,15 +5,22 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css">
   </head>
   <body>
-    <ul id="msg-list">
+    <header class="main-header">GoChat</header>
+    <span id="online-info">online: 1</span>
+    <span id="update-notice">aa signed off</span>
+    <button id="logout-btn" type="submit">Logout</button>
 
-    </ul>
+    <div class="main-container">
+      <ul id="msg-list">
 
-    <form id="my-form" action="">
-      <input id="my-input" autocomplete="off" />
-      <button type="submit">Send</button>
-    </form>
+      </ul>
+      <div class="blank-div">
 
+      </div>
+
+      <input id="my-input" autocomplete="off" placeholder="Type message(<200 words) here."/>
+      <button id="submit-btn" type="submit">Send</button>
+    </div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="/js/index.js"></script>

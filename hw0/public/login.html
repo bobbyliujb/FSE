@@ -3,18 +3,19 @@
   <head>
     <title>GoChat-Login</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400' 
+    rel='stylesheet' type='text/css'>
   </head>
   <body>
-    <h1>Login and GoChat</h1>
+      <header>Login and GoChat</header>
+
     <form id="login-form" >
-      <div class="input-box">
-        <label>username</label>
-        <input id="username-input" />
-      </div>
-      <div class="input-box">
-        <label>password</label>
-        <input id="password-input" type="password" />
-      </div>
+      <input placeholder="Username" id="username-input" type="text" required="" />
+      <span id="username-error" class="input-notice" ></span>
+
+      <input placeholder="Password" id="password-input" type="password" required="" />
+      <span id="password-error" class="input-notice"></span>
+
       <div><button type="submit">LOGIN NOW</button></div>
       <div><a href="register.html">New user? Register here</a></div>
   </form>

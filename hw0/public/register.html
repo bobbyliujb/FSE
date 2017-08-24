@@ -3,42 +3,26 @@
   <head>
     <title>GoChat-Register</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400' 
+    rel='stylesheet' type='text/css'>
   </head>
   <body>
-    <div class="form-div">
-      <h1>Register and GoChat</h1>
+      <header>Register and GoChat</header>
     
       <form id="reg-form" >
-        <div class="input-box">
-          <label>username</label>
-          <input id="username-input" />
-        </div>
-        <div class="notice">
-          <span id="username-error">Username already exist!</span>
-        </div>
+    
+          <input placeholder="Username" id="username-input" required="" />
+          <span id="username-error" class="input-notice"></span>
+       
+          <input placeholder="Password" id="password-input" required="" type="password" />
+          <span id="password-error" class="input-notice"></span>
 
-        <div class="input-box">
-          <label>password</label>
-          <input id="password-input" type="password" />
-        </div>
-        <div class="notice">
-          <span id="password-error">Password invalid!</span>
-        </div>
+          <input placeholder="Repeat Password" id="rep-pwd-input" required="" type="password" />
+          <span id="rep-pwd-error" class="input-notice">Repeated password not match!</span>
 
-        <div class="input-box">
-          <label>repeat password</label>
-          <input id="rep-pwd-input" type="password" />
-        </div>
-        <div class="notice">
-          <span id="rep-pwd-error">Repeated password not match!</span>
-        </div>
-        
-        <div>
           <button type="submit">REGISTER NOW</button>
-        </div>
-        <div><a href="login.html">Already a member? Login here</a></div>
+          <a href="login.html">Already a member?</a>
       </form>
-    </div>
 
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>    
     <script src="/js/register.js"></script>
