@@ -23,16 +23,19 @@ app.use(bodyParser.urlencoded({
     extended: true      // support boolean
 }));
 
+// broadcast to every client about latest userNum and who just changed his online status
 function updateOnlineCount(userNum, username, more) {
     data = {
         userNum: userNum,
         username: username,
-        more: more
+        more: more  // more == true -> the user just logged in; false -> logged off
     }
     conn.emit('update online count', data);
 }
 
 // Login the chatroom
+// Response: 001 -> username not exist, 002 -> password not match
+// 003 -> the user has already logged in, 000 -> everything's OK
 app.post('/login', function(req, res) {
     console.log('login comes');
     var username = req.body.username;
@@ -45,14 +48,14 @@ app.post('/login', function(req, res) {
             }
 
             if (sqlResult.length == 0) {
-                res.send('001');
+                res.send('001');    // user not exist
             } else if (sqlResult[0].password != password) {
-                res.send('002');
-            } else if (sqlResult[0].isOnline == true) { // already online
-                res.send('003');
+                res.send('002');    // password not match
+            } else if (sqlResult[0].isOnline == true) { 
+                res.send('003');    // already online
             } else {
                 res.send('000');
-                userNum++;
+                userNum++;  
                 updateOnlineCount(userNum, username, true);
                 console.log(username + ' just logged in');
                 sqlConn.query('UPDATE user SET isOnline=true WHERE username=\'' 
@@ -67,6 +70,7 @@ app.post('/login', function(req, res) {
 });
 
 // Register new user
+// Response: 101 -> username already registered, 100 -> everything's OK
 app.post('/register', function(req, res) {
     console.log('register comes');
     var username = req.body.username;
@@ -97,13 +101,13 @@ app.post('/register', function(req, res) {
     });
 });
 
-// return the chat page
+// send the chat page
 app.get('/', function(req, res) {
     //console.log('%d users connecting', userNum);
     res.sendFile(__dirname + '/public/index.html');
 });
 
-// return current userNum
+// send current userNum
 app.post('/initUserNum', function(req, res) {
     var data = {
         userNum: userNum
@@ -114,19 +118,19 @@ app.post('/initUserNum', function(req, res) {
 
 // monitor the connection from client
 conn.on('connection', function(socket) { 
-    // Initialize the message from previous chat
+    // initialize the message list from previous chat in the database
     sqlConn.query('SELECT * FROM message', function(err, sqlResult) {
         if (err) {
             console.log('select error', err.message);
             return;
         } else {
             conn.emit('init message', sqlResult);
-            //console.log(sqlResult);
         }
     });
     
+    // monitor user input and send message to server
     socket.on('input message', function(msg) {
-        conn.emit('update message', msg);
+        conn.emit('update message', msg);   // broadcast to all client to update
         console.log(msg);
         var arr = [msg.fromUser, msg.sendTime, msg.content];
         sqlConn.query('INSERT INTO message (fromUser, sendTime, content) ' + 
@@ -139,6 +143,7 @@ conn.on('connection', function(socket) {
             });
     });
 
+    // monitor set user online status action
     socket.on('set online', function(username) {
         console.log('setting online for ' + username);
         sqlConn.query('SELECT isOnline from user WHERE username=\'' + 
@@ -155,7 +160,7 @@ conn.on('connection', function(socket) {
                         console.log('update failed! ', err.message);
                         return;
                     }
-                    userNum++;
+                    userNum++;  // only increase userNum when he was offline before update
                     updateOnlineCount(userNum, username, true);
                     console.log(username + ' just logged in');
                 });
@@ -163,6 +168,7 @@ conn.on('connection', function(socket) {
         });
     });
 
+    // monitor set user offline status action
     socket.on('set offline', function(username) {
         console.log('setting offline for ' + username);        
         sqlConn.query('SELECT isOnline from user WHERE username=\'' + 
